@@ -1,9 +1,5 @@
-def palindrom(wyraz):
-    counter=0
-    for i in range(len(wyraz)):
-        if wyraz[i]==wyraz[-i-1]:
-            counter+=1       
-    return True if counter>=len(wyraz)-1 else False
+def palindrom(wyraz):     
+    return True if wyraz==wyraz[::-1] and wyraz.isalpha() else False
 
 print(palindrom('kajak'))
 
