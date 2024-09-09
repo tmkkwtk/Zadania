@@ -1,3 +1,5 @@
+import logging
+
 def add(a, b, *args):
     addv = 0
     for x in args:
@@ -28,7 +30,7 @@ def get_additional_valus(op):
         try: 
             v = float(v)
         except:
-            print('Podaj prawidłową liczbę!')
+            logging.critical('Podaj prawidłową liczbę!')
             continue
         args.append(v)
     return args
@@ -41,7 +43,7 @@ def get_data():
             a = float(a)
             break
         except:
-            print('Podaj prawidłową liczbę!')
+            logging.critical('Podaj prawidłową liczbę!')
     while True:
         b  = input("Podaj składnik 2. ")
         try:
@@ -50,7 +52,7 @@ def get_data():
             else:
                break
         except:
-            print('Podaj prawidłową liczbę!')
+            logging.critical('Podaj prawidłową liczbę!')
     args = get_additional_valus(op)
     return str(op), float(a), float(b), args
 
@@ -72,13 +74,14 @@ def info(op, a, b, *args):
         message = message + ', ' + str(arg)
     return message
 
-    
+   
 def main():
+    logging.basicConfig(level=logging.DEBUG)
     op, a, b, args = get_data()
     result = operations[op](a, b, *args)
     message = info(op, a, b, *args)
-    print(message)
-    print(f'Wynik to: {result}')
+    logging.info(message)
+    logging.info(f'Wynik to: {result}')
     con = input("Czy chcesz kontynuować? (tak/nie)")
     return con
 
