@@ -22,9 +22,7 @@ class BusinessContact(BaseContact):
         self.work_phone = work_phone
 
     def contact(self):
-        print(
-            f"Wybieram numer {self.work_phone} i dzwonię do {self.first_name} {self.last_name}"
-        )
+        return f"Wybieram numer {self.work_phone} i dzwonię do {self.first_name} {self.last_name}"
 
 
 def create_contacts(type, quantity):
@@ -33,24 +31,30 @@ def create_contacts(type, quantity):
     fake = Faker("pl_PL")
     cards = []
     for i in range(quantity):
-        cards.append(
-            BaseContact(
-                fake.first_name(), fake.last_name(), fake.phone_number(), fake.email()
-            )
-        )
-    if type == "Business":
-        cards[i].occupancy = fake.job()
-        cards[i].company = fake.company()
-        cards[i].work_phone = fake.phone_number()
+
+        data = {
+            "first_name": fake.first_name(),
+            "last_name": fake.last_name(),
+            "phone": fake.phone_number(),
+            "email": fake.email(),
+        }
+
+        if type == "business":
+            data["occupancy"] = fake.job()
+            data["company"] = fake.company()
+            data["work_phone"] = fake.phone_number()
+
+            cards.append(BusinessContact(**data))
+        else:
+            cards.append(BaseContact(**data))
 
     for card in cards:
         text = ""
         for key, value in vars(card).items():
-            text += key + ': ' + value + " "
+            text += key + ": " + value + " "
         print(text)
         print(card.contact())
         print(card.label_length)
 
 
-create_contacts("Business", 5)
-
+create_contacts("base", 5)
