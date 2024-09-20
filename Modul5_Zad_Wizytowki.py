@@ -57,4 +57,4 @@ def create_contacts(type, quantity):
         print(card.label_length)
 
 
-create_contacts("base", 5)
+create_contacts("business", 5)
