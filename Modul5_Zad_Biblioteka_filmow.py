@@ -21,10 +21,10 @@ class Series(Movies):
     def __str__(self):
         return f"{self.title} S{str(self.number_of_series).zfill(2)}E{str(self.number_of_episode).zfill(2)}"
 
+
 def fulfill():
 
     library = []
-
 
     library.append(Movies("Pulp Fiction", 1994, "crime film", 1))
     library.append(Movies("The Shawshank Redemption", 1994, "drama", 1))
@@ -63,15 +63,28 @@ def fulfill():
 
     return library
 
+
 def get_movies():
-    movies = sorted([movie for movie in library if isinstance(movie, Movies) and not isinstance(movie, Series)], key = lambda movie: movie.title) 
+    movies = sorted(
+        [
+            movie
+            for movie in library
+            if isinstance(movie, Movies) and not isinstance(movie, Series)
+        ],
+        key=lambda movie: movie.title,
+    )
     for movie in movies:
         print(movie)
 
+
 def get_series():
-    series = sorted([one_series for one_series in library if isinstance(one_series, Series)], key = lambda one_series: one_series.title) 
+    series = sorted(
+        [one_series for one_series in library if isinstance(one_series, Series)],
+        key=lambda one_series: one_series.title,
+    )
     for one_series in series:
         print(one_series)
+
 
 def search(keyword):
     findings = []
@@ -79,38 +92,46 @@ def search(keyword):
         if keyword.lower() in work.title.lower():
             findings.append(work)
     for find in findings:
-       print(find)
+        print(find)
+
 
 def generate_views():
-    import random 
+    import random
+
     choice = random.choice(library)
-    for i in range(random.randint(1,100)):
+    for i in range(random.randint(1, 100)):
         choice.play()
-    
 
 
-def generate_views_x_times(x = 10):
-        for i in range(x):
-            generate_views()
+def generate_views_x_times(x=10):
+    for i in range(x):
+        generate_views()
+
 
 def top_titles(how_many, content_type):
     from datetime import date
-    if content_type.lower() == 'series':
-        print(f'Najpopularniejsze seriale dnia {date.today()} ')
-        top_list = sorted([work for work in library if isinstance(work, Series)], key= lambda work: work.play_count, reverse='True')
-    else:  
-        print(f'Najpopularniejsze filmy dnia {date.today()} ')     
-        top_list = sorted([work for work in library if isinstance(work, Movies)], key= lambda work: work.play_count, reverse='True')
+
+    if content_type.lower() == "series":
+        print(f"Najpopularniejsze seriale dnia {date.today()} ")
+        top_list = sorted(
+            [work for work in library if isinstance(work, Series)],
+            key=lambda work: work.play_count,
+            reverse="True",
+        )
+    else:
+        print(f"Najpopularniejsze filmy dnia {date.today()} ")
+        top_list = sorted(
+            [work for work in library if isinstance(work, Movies)],
+            key=lambda work: work.play_count,
+            reverse="True",
+        )
     for x in range(how_many):
-        print(vars(top_list[x]))  
+        print(vars(top_list[x]))
+
 
 if __name__ == "__main__":
-    print('Biblioteka filmów')
+    print("Biblioteka filmów")
     library = fulfill()
     generate_views_x_times()
-    top_titles(3,'movies')
-    top_titles(3,'series')
-
-
-
-
+    top_titles(3, "movies")
+    top_titles(3, "series")
